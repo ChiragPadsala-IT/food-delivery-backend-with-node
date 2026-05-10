@@ -7,6 +7,7 @@ const path = require("path");
 const connectDB = require("./src/config/db");
 
 const authRoute = require("./src/routes/auth.route");
+const userRoute = require("./src/routes/user.route.js");
 
 // don env configuration
 const envPath = path.join(__dirname, ".env");
@@ -29,6 +30,7 @@ app.use(cors());
 
 // routes
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/user", userRoute);
 
 // app listen
 app.listen(PORT, () => {

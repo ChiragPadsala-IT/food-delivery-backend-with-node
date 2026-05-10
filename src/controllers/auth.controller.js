@@ -44,22 +44,17 @@ const loginController = async (req, res) => {
         .json({ success: false, message: "Please provide all required field" });
     }
 
-    const loginResponse = await loginService(email, password);
+    const token = await loginService(email, password);
 
-    if (!loginResponse) {
+    if (!token) {
       return res
         .status(500)
         .json({ success: false, message: "Incorrect email and password" });
     }
 
-    const loginReponse = await loginService(email, password);
-
-    if (!loginReponse) {
-      return res
-        .status(500)
-        .json({ success: fasle, message: "Something went wrong" });
-    }
-    res.status(200).json({ success: true, message: "Login Successful" });
+    res
+      .status(200)
+      .json({ success: true, message: "Login Successful", token: token });
   } catch (error) {
     console.log(`$error`.bgRed);
     console.log(error.message);
