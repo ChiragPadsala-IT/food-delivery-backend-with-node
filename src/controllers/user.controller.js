@@ -4,6 +4,7 @@ const {
   generateOtpService,
   verifyOtpService,
   resetPasswordService,
+  deleteUserService,
 } = require("../services/user.service.js");
 
 const GetUserController = async (req, res) => {
@@ -132,10 +133,32 @@ const resetPasswordController = async (req, res) => {
     });
   }
 };
+
+const deleteUserController = async (req, res) => {
+  try {
+    const isUserDeleted = await deleteUserService(req.user_id);
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: `${isUserDeleted.email} deleted successfully`,
+      });
+  } catch (error) {
+    console.log(`$error`.bgRed);
+    console.log(error.message);
+    res.status(500).json({
+      success: false,
+      message: "Error in delete user api",
+      error,
+    });
+  }
+};
 module.exports = {
   GetUserController,
   updateUserController,
   generateOtpController,
   verifyOtpController,
   resetPasswordController,
+  deleteUserController,
 };

@@ -63,10 +63,19 @@ const resetPasswordService = async (email, newPassword) => {
   return true;
 };
 
+const deleteUserService = async (id) => {
+  const res = await userModel.findByIdAndDelete(id);
+
+  if (!res) throw new Error("User not existed");
+
+  return res.email;
+};
+
 module.exports = {
   getUserService,
   updateUserService,
   generateOtpService,
   verifyOtpService,
   resetPasswordService,
+  deleteUserService,
 };
