@@ -1,4 +1,5 @@
 const userModel = require("../models/auth.model");
+const bcrypt = require("bcrypt");
 
 const getUserService = async (id) =>
   await userModel.findById(id).select("-_id");
@@ -38,6 +39,27 @@ const verifyOtpService = async (email, otp) => {
 
   if (user.otp !== otp) throw new Error("Invalid Otp");
 
+  user.otpVerifyStatus = true;
+
+  await user.save();
+
+  return true;
+};
+
+const resetPasswordService = async (email, newPassword) => {
+  const user = await userModel.findOne({ email }).select("+password");
+
+  if (!user.otpVerifyStatus)
+    throw new Error("Something went wrong password service");
+
+  // passwrod hashing
+  const salt = bcrypt.genSaltSync(10);
+  const hashPassword = await bcrypt.hash(newPassword, salt);
+
+  user.password = hashPassword;
+
+  await user.save();
+
   return true;
 };
 
@@ -46,4 +68,5 @@ module.exports = {
   updateUserService,
   generateOtpService,
   verifyOtpService,
+  resetPasswordService,
 };

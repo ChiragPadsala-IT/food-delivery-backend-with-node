@@ -4,6 +4,7 @@ const {
   updateUserController,
   generateOtpController,
   verifyOtpController,
+  resetPasswordController,
 } = require("../controllers/user.controller.js");
 const authMiddleware = require("../middlewares/auth.middleware.js");
 
@@ -20,5 +21,8 @@ router.post("/generate-otp", generateOtpController);
 
 // Verify Otp
 router.post("/verify-otp", verifyOtpController);
+
+// Reset Password
+router.put("/reset-password", resetPasswordController);
 
 module.exports = router;

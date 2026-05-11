@@ -3,6 +3,7 @@ const {
   updateUserService,
   generateOtpService,
   verifyOtpService,
+  resetPasswordService,
 } = require("../services/user.service.js");
 
 const GetUserController = async (req, res) => {
@@ -103,6 +104,29 @@ const verifyOtpController = async (req, res) => {
     console.log(error.message);
     res.status(500).json({
       success: false,
+      message: "Error in opt verify api",
+      error,
+    });
+  }
+};
+
+const resetPasswordController = async (req, res) => {
+  try {
+    const { email, newPassword } = req.body;
+
+    const isPasswordUpdate = await resetPasswordService(email, newPassword);
+
+    if (!isPasswordUpdate)
+      throw new Error("Something went wrong in reset password controller");
+
+    res
+      .status(200)
+      .json({ success: true, message: "Password updated successfully" });
+  } catch (error) {
+    console.log(`$error`.bgRed);
+    console.log(error.message);
+    res.status(500).json({
+      success: false,
       message: "Error in reset password api",
       error,
     });
@@ -113,4 +137,5 @@ module.exports = {
   updateUserController,
   generateOtpController,
   verifyOtpController,
+  resetPasswordController,
 };
