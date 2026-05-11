@@ -1,6 +1,8 @@
 const {
   getUserService,
   updateUserService,
+  generateOtpService,
+  verifyOtpService,
 } = require("../services/user.service.js");
 
 const GetUserController = async (req, res) => {
@@ -51,13 +53,11 @@ const updateUserController = async (req, res) => {
       });
     }
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "User update successfully",
-        updateUser: updateRes,
-      });
+    res.status(200).json({
+      success: true,
+      message: "User update successfully",
+      updateUser: updateRes,
+    });
   } catch (error) {
     console.log(`$error`.bgRed);
     console.log(error.message);
@@ -69,4 +69,48 @@ const updateUserController = async (req, res) => {
   }
 };
 
-module.exports = { GetUserController, updateUserController };
+const generateOtpController = async (req, res) => {
+  try {
+    const email = req.body.email;
+
+    const otp = await generateOtpService(email);
+
+    res
+      .status(200)
+      .json({ success: true, message: "Otp sent successfully", otp });
+  } catch (error) {
+    console.log(`$error`.bgRed);
+    console.log(error.message);
+    res.status(500).json({
+      success: false,
+      message: "Error in generate otp api",
+      error,
+    });
+  }
+};
+
+const verifyOtpController = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    const isVerify = await verifyOtpService(email, otp);
+
+    if (!isVerify) res.status(500).json("Invalid Otp");
+
+    res.status(200).json({ success: true, message: "Otp verified" });
+  } catch (error) {
+    console.log(`$error`.bgRed);
+    console.log(error.message);
+    res.status(500).json({
+      success: false,
+      message: "Error in reset password api",
+      error,
+    });
+  }
+};
+module.exports = {
+  GetUserController,
+  updateUserController,
+  generateOtpController,
+  verifyOtpController,
+};

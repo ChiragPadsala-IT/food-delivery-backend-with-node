@@ -12,6 +12,7 @@ module.exports = async (req, res, next) => {
 
     req.body.user_id = payload.id;
 
+    console.log(`Auth middleware successfully`.bgGreen);
     next();
   } catch (error) {
     console.log(`${error}`.bgRed);

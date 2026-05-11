@@ -40,6 +40,14 @@ const userSchema = new mongoose.Schema(
       default:
         "https://png.pngtree.com/png-clipart/20230927/original/pngtree-man-avatar-image-for-profile-png-image_13001882.png",
     },
+
+    otp: {
+      type: String,
+    },
+
+    otpExpire: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

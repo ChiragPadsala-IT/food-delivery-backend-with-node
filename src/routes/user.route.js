@@ -2,6 +2,8 @@ const express = require("express");
 const {
   GetUserController,
   updateUserController,
+  generateOtpController,
+  verifyOtpController,
 } = require("../controllers/user.controller.js");
 const authMiddleware = require("../middlewares/auth.middleware.js");
 
@@ -12,5 +14,11 @@ router.post("/get-user", authMiddleware, GetUserController);
 
 // Update User
 router.put("/update-user", authMiddleware, updateUserController);
+
+// Generate Otp
+router.post("/generate-otp", generateOtpController);
+
+// Verify Otp
+router.post("/verify-otp", verifyOtpController);
 
 module.exports = router;
