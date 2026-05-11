@@ -11,11 +11,8 @@ module.exports = async (req, res, next) => {
 
     const payload = jwt.verify(token, JWT_SECRET_KEY);
 
-    console.log(`${payload.id}`);
-
     req.body.user_id = payload.id;
 
-    console.log(`Auth middleware successfully`.bgGreen);
     next();
   } catch (error) {
     console.log(`${error}`.bgRed);
