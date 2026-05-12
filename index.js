@@ -4,10 +4,11 @@ const cors = require("cors");
 const colors = require("colors");
 const dotenv = require("dotenv");
 const path = require("path");
-const connectDB = require("./src/config/db");
+const connectDB = require("./src/config/db.js");
 
-const authRoute = require("./src/routes/auth.route");
+const authRoute = require("./src/routes/auth.route.js");
 const userRoute = require("./src/routes/user.route.js");
+const restaurantRoute = require("./src/routes/restaurant.route.js");
 
 // don env configuration
 const envPath = path.join(__dirname, ".env");
@@ -31,6 +32,7 @@ app.use(cors());
 // routes
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/restaurant", restaurantRoute);
 
 // app listen
 app.listen(PORT, () => {
