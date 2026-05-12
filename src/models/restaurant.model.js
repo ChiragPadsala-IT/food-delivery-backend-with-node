@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 //schema
 const restaurantSchema = new mongoose.Schema(
   {
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+    },
     title: {
       type: String,
       required: [true, "Restaurant title is required"],
