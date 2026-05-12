@@ -136,14 +136,12 @@ const resetPasswordController = async (req, res) => {
 
 const deleteUserController = async (req, res) => {
   try {
-    const isUserDeleted = await deleteUserService(req.user_id);
+    const isUserDeleted = await deleteUserService(req.body.user_id);
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: `${isUserDeleted.email} deleted successfully`,
-      });
+    res.status(200).json({
+      success: true,
+      message: `${isUserDeleted.email} deleted successfully`,
+    });
   } catch (error) {
     console.log(`$error`.bgRed);
     console.log(error.message);

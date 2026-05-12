@@ -68,7 +68,7 @@ const deleteUserService = async (id) => {
 
   if (!res) throw new Error("User not existed");
 
-  return res.email;
+  return { email: res.email };
 };
 
 module.exports = {
