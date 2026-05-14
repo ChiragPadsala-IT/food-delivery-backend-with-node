@@ -1,4 +1,7 @@
-const { createRestaurantService } = require("../services/restaurant.service");
+const {
+  createRestaurantService,
+  getAllRestaurantService,
+} = require("../services/restaurant.service");
 
 const createRestaurantController = async (req, res) => {
   try {
@@ -59,4 +62,31 @@ const createRestaurantController = async (req, res) => {
   }
 };
 
-module.exports = { createRestaurantController };
+const getAllRestaurantController = async (req, res) => {
+  try {
+    const allRestaurant = await getAllRestaurantService();
+
+    if (!allRestaurant)
+      return res
+        .status(404)
+        .json({ success: true, message: "No restaurant found" });
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Restaurant found",
+        restaurants: allRestaurant,
+      });
+  } catch (error) {
+    console.log(`$error`.bgRed);
+    console.log(error.message);
+    res.status(500).json({
+      success: false,
+      message: "Error in get all restaurant api",
+      error,
+    });
+  }
+};
+
+module.exports = { createRestaurantController, getAllRestaurantController };

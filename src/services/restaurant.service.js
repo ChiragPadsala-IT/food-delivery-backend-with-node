@@ -44,4 +44,6 @@ const createRestaurantService = async (
   return newRestaurant;
 };
 
-module.exports = { createRestaurantService };
+const getAllRestaurantService = async () => await restaurantModel.find();
+
+module.exports = { createRestaurantService, getAllRestaurantService };
